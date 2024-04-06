@@ -242,6 +242,7 @@ impl<'a> Camera<'a> {
         pin_scl: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pixel_format: camera::pixformat_t,
         frame_size: camera::framesize_t,
+        fb_location: camera::camera_fb_location_t,
     ) -> Result<Self, esp_idf_sys::EspError> {
         esp_idf_hal::into_ref!(
             pin_pwdn, pin_xclk, pin_d0, pin_d1, pin_d2, pin_d3, pin_d4, pin_d5, pin_d6, pin_d7,
@@ -275,7 +276,7 @@ impl<'a> Camera<'a> {
             fb_count: 1,
             grab_mode: camera::camera_grab_mode_t_CAMERA_GRAB_WHEN_EMPTY,
 
-            fb_location: camera::camera_fb_location_t_CAMERA_FB_IN_PSRAM,
+            fb_location,
 
             __bindgen_anon_1: camera::camera_config_t__bindgen_ty_1 {
                 pin_sccb_sda: pin_sda.pin(),
