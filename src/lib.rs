@@ -214,27 +214,26 @@ pub struct Camera<'a> {
 impl<'a> Camera<'a> {
     pub fn new(
         pin_pwdn: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
-        pin_reset: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pin_xclk: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pin_d0: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pin_d1: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pin_d2: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pin_d3: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
-        pin_d4: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
-        pin_d5: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
-        pin_d6: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
-        pin_d7: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
+        pin_d4: impl Peripheral<P = impl InputPin> + 'a,
+        pin_d5: impl Peripheral<P = impl InputPin> + 'a,
+        pin_d6: impl Peripheral<P = impl InputPin> + 'a,
+        pin_d7: impl Peripheral<P = impl InputPin> + 'a,
         pin_vsync: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pin_href: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
         pin_pclk: impl Peripheral<P = impl InputPin + OutputPin> + 'a,
     ) -> Result<Self, esp_idf_sys::EspError> {
         esp_idf_hal::into_ref!(
-            pin_pwdn, pin_reset, pin_xclk, pin_d0, pin_d1, pin_d2, pin_d3, pin_d4, pin_d5, pin_d6,
-            pin_d7, pin_vsync, pin_href, pin_pclk
+            pin_pwdn, pin_xclk, pin_d0, pin_d1, pin_d2, pin_d3, pin_d4, pin_d5, pin_d6, pin_d7,
+            pin_vsync, pin_href, pin_pclk
         );
         let config = camera::camera_config_t {
             pin_pwdn: pin_pwdn.pin(),
-            pin_reset: pin_reset.pin(),
+            pin_reset: 0xff, // https://github.com/Kezii/esp32cam_rs/blob/a716c0e3e2f62fc698456b6d370de55b77de42ca/src/espcam.rs#L251C24-L251C28
             pin_xclk: pin_xclk.pin(),
 
             pin_d0: pin_d0.pin(),
