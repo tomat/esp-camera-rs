@@ -1,0 +1,5 @@
+# I think larger stack size is required for rust? Not sure where I got this info
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8000
+
+# Enable PSRAM, which allows us to store larger images
+CONFIG_ESP32_SPIRAM_SUPPORT=y
